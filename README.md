@@ -57,6 +57,32 @@ Before starting, **create an empty database** (default: `diff_database`) where t
 You can do this in MySQL with:
 ```sql
 CREATE DATABASE diff_database;
+```
 
+### Step 2: Run the Backup/Restore Script
+
+To create a fresh backup of your main Moodle database using mysqldump and restore this backup automatically as a new backup database for comparison run:
+
+```bash
+python moodle_backup_restore.py
+```
+or the batch file `moodle_backup_restore`.
+
+### Step 3: Make a Change
+Make the change you want to track in your main Moodle database.
+
+### Step 4: Run the Comparison Script
+
+To compare your main and backup Moodle databases, run
+```bash
+python compare_databases.py
+```
+or the batch file `compare_databases.py`.
+
+## Disclaimer
+
+This tool is provided **as-is**, with no warranty or guarantee of correctness.
+
+**Always back up your data before running any database operation.**
 
 
