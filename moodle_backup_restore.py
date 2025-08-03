@@ -23,6 +23,7 @@ def print_default_config(
         f"\n{Style.BRIGHT}{Fore.CYAN}================================{Style.RESET_ALL}\n"
     )
 
+
 def get_user_config():
     """Get database configuration from user input"""
     print(f"\n{Style.BRIGHT}{Fore.GREEN}=== ENTER CONFIGURATION ==={Style.RESET_ALL}")
@@ -47,9 +48,9 @@ def get_user_config():
     )
     backup_file = (
         input(
-            f"Enter backup file path [{Fore.YELLOW}C:\\My_Docs\\Codes\\backup.sql{Style.RESET_ALL}]: "
+            f"Enter backup file path [{Fore.YELLOW}C:\\DbBackup\\backup.sql{Style.RESET_ALL}]: "
         ).strip()
-        or r"C:\My_Docs\Codes\backup.sql"
+        or r"C:\DbBackup\backup.sql"
     )
     mysql_bin_folder = (
         input(
@@ -71,6 +72,7 @@ def get_user_config():
         mysql_bin_folder,
     )
 
+
 def get_yes_no_input(prompt, default="y"):
     """Get yes/no input from user"""
     while True:
@@ -90,6 +92,7 @@ def get_yes_no_input(prompt, default="y"):
         else:
             print(f"{Fore.RED}Please enter 'y' for yes or 'n' for no.{Style.RESET_ALL}")
 
+
 def backup_database(host, user, password, database, output_file, mysql_bin_folder):
     # Construct the mysqldump command
     command = [
@@ -102,9 +105,12 @@ def backup_database(host, user, password, database, output_file, mysql_bin_folde
     ]
 
     # Run the mysqldump command
-    print(f'\nRunning {Fore.YELLOW}{Style.BRIGHT}BACKUP{Style.RESET_ALL} command on {database}')
+    print(
+        f"\nRunning {Fore.YELLOW}{Style.BRIGHT}BACKUP{Style.RESET_ALL} command on {database}"
+    )
     subprocess.run(command, shell=True)
-    print(f'{Fore.LIGHTGREEN_EX}--DONE{Style.RESET_ALL}\n')
+    print(f"{Fore.LIGHTGREEN_EX}--DONE{Style.RESET_ALL}\n")
+
 
 def clear_and_restore_database(
     host, user, password, database, input_file, mysql_bin_folder
@@ -117,37 +123,34 @@ def clear_and_restore_database(
     ]
 
     # Construct the mysql clear command
-    clear_command = [
-        '-e',
-        f'DROP DATABASE IF EXISTS {database};'
-    ]
+    clear_command = ["-e", f"DROP DATABASE IF EXISTS {database};"]
 
     # Run the mysql clear command
-    print(f'\nStart to {Style.BRIGHT}{Fore.RED}CLEARING{Style.RESET_ALL} backup database ({database}).\nIt will take time, please wait!!')
-    subprocess.run( base_command + clear_command, shell=True)
-    print(f'{Fore.LIGHTGREEN_EX}--DONE{Style.RESET_ALL}\n')
+    print(
+        f"\nStart to {Style.BRIGHT}{Fore.RED}CLEARING{Style.RESET_ALL} backup database ({database}).\nIt will take time, please wait!!"
+    )
+    subprocess.run(base_command + clear_command, shell=True)
+    print(f"{Fore.LIGHTGREEN_EX}--DONE{Style.RESET_ALL}\n")
 
     # Construct the mysql create database command
-    create_database_command = [
-        '-e',
-        f'CREATE DATABASE {database};'
-    ]
+    create_database_command = ["-e", f"CREATE DATABASE {database};"]
 
     # Run the mysql create database command
-    print(f'\n{Style.BRIGHT}{Fore.BLUE}Creating{Style.RESET_ALL} new backup database ({database})')
-    subprocess.run( base_command + create_database_command, shell=True)
-    print(f'{Fore.LIGHTGREEN_EX}--DONE{Style.RESET_ALL}\n')
+    print(
+        f"\n{Style.BRIGHT}{Fore.BLUE}Creating{Style.RESET_ALL} new backup database ({database})"
+    )
+    subprocess.run(base_command + create_database_command, shell=True)
+    print(f"{Fore.LIGHTGREEN_EX}--DONE{Style.RESET_ALL}\n")
 
     # Construct the mysql restore command
-    restore_command = [
-      f'{database}',
-      f'< {input_file}'
-    ]
+    restore_command = [f"{database}", f"< {input_file}"]
 
     # Run the mysql restore command
-    print(f'\n{Style.BRIGHT}{Fore.MAGENTA}Restoring{Style.RESET_ALL} backup file.\nIt will take time, please wait!!')
-    subprocess.run(' '.join(base_command + restore_command), shell=True)
-    print(f'{Fore.LIGHTGREEN_EX}--DONE{Style.RESET_ALL}\n')
+    print(
+        f"\n{Style.BRIGHT}{Fore.MAGENTA}Restoring{Style.RESET_ALL} backup file.\nIt will take time, please wait!!"
+    )
+    subprocess.run(" ".join(base_command + restore_command), shell=True)
+    print(f"{Fore.LIGHTGREEN_EX}--DONE{Style.RESET_ALL}\n")
 
 
 if __name__ == "__main__":
@@ -161,7 +164,7 @@ if __name__ == "__main__":
     password = ""
     backup_from_database = "moodle"
     restore_to_database = "moodle_backup"
-    backup_file = r'C:\My_Docs\Codes\backup.sql'
+    backup_file = r"C:\DbBackup\backup.sql"
     mysql_bin_folder = r"C:\Moodle5.1\server\mysql\bin"
 
     # Print default configuration and ask if user wants to change it
