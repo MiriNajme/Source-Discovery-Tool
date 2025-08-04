@@ -55,7 +55,7 @@ CREATE DATABASE diff_database;
 ```
 Add a new table to the `diff_database` as shown in the figure below:
   
-<img src="figures/diff-table-creation.png" alt="Diff-Table" width="420"/>
+<img src="figures/diff-table-creation.png" alt="Diff-Table" width="500"/>
 
 ### Step 2: Run the Backup/Restore Script
 
